@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_bakerclick/screens/register.dart';
 
 class Auten extends StatefulWidget {
   @override
@@ -50,12 +51,22 @@ class _AutenState extends State<Auten> {
     );
   }
 
-  Widget signUp() {
+  Widget signUp(BuildContext context) {
     return OutlineButton(
       borderSide: BorderSide(color: Colors.blue[900]),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: Text('Sign Up', style: TextStyle(color: Colors.blue[900]),),
-      onPressed: () {},
+      child: Text(
+        'Sign Up',
+        style: TextStyle(color: Colors.blue[900]),
+      ),
+      onPressed: () {
+        print('You Click SignUp');
+
+        // Create Route 
+        var registerRoute = MaterialPageRoute(builder: (BuildContext context) => Register());
+        Navigator.of(context).push(registerRoute);
+
+      },
     );
   }
 
@@ -97,7 +108,7 @@ class _AutenState extends State<Auten> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(left: 2.5),
-                      child: signUp(),
+                      child: signUp(context),
                     ),
                   )
                 ],
