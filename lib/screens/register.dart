@@ -8,6 +8,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // Variable and Constant
   final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passwordString;
 
   // Method
   Widget passwordTextFromField() {
@@ -32,6 +33,8 @@ class _RegisterState extends State<Register> {
         if (value.length <= 5) {
           return 'Password Must More 5 Charactor';
         }
+      },onSaved: (String value){
+        passwordString = value;
       },
     );
   }
@@ -58,6 +61,8 @@ class _RegisterState extends State<Register> {
         if (!((value.contains('@')) && (value.contains('.')))) {
           return 'Email Format Only => you@email.com';
         }
+      },onSaved: (String value){
+        emailString = value;
       },
     );
   }
@@ -85,6 +90,8 @@ class _RegisterState extends State<Register> {
         if (value.length == 0) {
           return 'Please Fill Name in Blank';
         }
+      },onSaved: (String value){
+        nameString = value;
       },
     );
   }
@@ -97,10 +104,21 @@ class _RegisterState extends State<Register> {
       ),
       onPressed: () {
         print('You Click upload');
-        if (formKey.currentState.validate()) {}
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          uploadToFirebase();
+        }
       },
     );
   }
+
+  void uploadToFirebase(){
+
+    print('Name = $nameString, Email = $emailString, Pass = $passwordString');
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
