@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "255513164294",
+    "firebase_url": "https://shopbakerclickung.firebaseio.com",
+    "project_id": "shopbakerclickung",
+    "storage_bucket": "shopbakerclickung.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255513164294:android:a448dc653a7df073",
+        "android_client_info": {
+          "package_name": "com.ung.shop_bakerclick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255513164294-1mted85td9ep4c1itepit41mjgp612s0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ung.shop_bakerclick",
+            "certificate_hash": "99f1de59cbbb9f0ab27aeb63c596235bc843b92a"
+          }
+        },
+        {
+          "client_id": "255513164294-l393o280b43kklmi6hdi49n9sov98kml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRsMZpeIq1haoApYxTtdsIEmSBdyn5Dq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255513164294-l393o280b43kklmi6hdi49n9sov98kml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

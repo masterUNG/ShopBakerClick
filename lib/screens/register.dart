@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -33,7 +34,8 @@ class _RegisterState extends State<Register> {
         if (value.length <= 5) {
           return 'Password Must More 5 Charactor';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         passwordString = value;
       },
     );
@@ -61,7 +63,8 @@ class _RegisterState extends State<Register> {
         if (!((value.contains('@')) && (value.contains('.')))) {
           return 'Email Format Only => you@email.com';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         emailString = value;
       },
     );
@@ -90,7 +93,8 @@ class _RegisterState extends State<Register> {
         if (value.length == 0) {
           return 'Please Fill Name in Blank';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         nameString = value;
       },
     );
@@ -112,13 +116,42 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  void uploadToFirebase(){
-
+  Future uploadToFirebase() async {
     print('Name = $nameString, Email = $emailString, Pass = $passwordString');
 
-
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((objValue) {
+      print('Register Success');
+    }).catchError((objError) {
+      String error = objError.message;
+      print('error ==> $error');
+      myShowDialog(error);
+    });
   }
 
+  Widget alertButton(BuildContext context) {
+    return FlatButton(
+      child: Text('Close'),onPressed: (){
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+  void myShowDialog(String messageString) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Have Error'),
+          content: Text(messageString),
+          actions: <Widget>[alertButton(context)],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
