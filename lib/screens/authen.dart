@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_bakerclick/screens/product_list.dart';
 import 'package:shop_bakerclick/screens/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Auten extends StatefulWidget {
   @override
@@ -11,6 +13,27 @@ class _AutenState extends State<Auten> {
   String appName = 'Bakerclick Shop';
 
 // Method
+  @override
+  void initState() {
+    super.initState();
+    checkStatus();
+  }
+
+  Future checkStatus() async {
+    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    if (firebaseUser != null) {
+      moveToProduct();
+    }
+  }
+
+  void moveToProduct() {
+    var productRoute =
+        MaterialPageRoute(builder: (BuildContext context) => ProductList());
+    Navigator.of(context)
+        .pushAndRemoveUntil(productRoute, (Route<dynamic> route) => false);
+  }
+
   Widget showLogo() {
     return Image.asset('images/logo.png');
   }
@@ -62,10 +85,10 @@ class _AutenState extends State<Auten> {
       onPressed: () {
         print('You Click SignUp');
 
-        // Create Route 
-        var registerRoute = MaterialPageRoute(builder: (BuildContext context) => Register());
+        // Create Route
+        var registerRoute =
+            MaterialPageRoute(builder: (BuildContext context) => Register());
         Navigator.of(context).push(registerRoute);
-
       },
     );
   }
