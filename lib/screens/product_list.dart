@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProductList extends StatefulWidget {
@@ -7,16 +11,27 @@ class ProductList extends StatefulWidget {
 
 class _ProductListState extends State<ProductList> {
   // Explicit
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // Method
   Widget signOutButton() {
     return Container(
       margin: EdgeInsets.only(right: 80.0),
-      child: IconButton(tooltip: 'Sign Out',
+      child: IconButton(
+        tooltip: 'Sign Out',
         icon: Icon(Icons.exit_to_app),
-        onPressed: () {},
+        onPressed: () {
+          print('You Click SignOut');
+          mySignOut();
+        },
       ),
     );
+  }
+
+  Future<void> mySignOut() async {
+    await firebaseAuth.signOut().then((response) {
+      exit(0);
+    });
   }
 
   @override
