@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_bakerclick/screens/information.dart';
+import 'package:shop_bakerclick/screens/marketplate.dart';
 
 class ProductList extends StatefulWidget {
   @override
@@ -12,12 +14,46 @@ class ProductList extends StatefulWidget {
 class _ProductListState extends State<ProductList> {
   // Explicit
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  String nameLogin = '';
+  double mySizeIcon = 36.0;
+  double myH1 = 24.0;
+  double myH2 = 18.0;
+  Widget myWidget = Marketplate();
 
   // Method
+
+  @override
+  void initState() {
+    super.initState();
+    findNameLogin();
+  }
+
+  Widget myDivider() {
+    return Divider();
+  }
+
+  Future<void> findNameLogin() async {
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    setState(() {
+      nameLogin = firebaseUser.displayName;
+    });
+    print('name = $nameLogin');
+  }
+
   Widget titleSignOut() {
     return ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Sign Out & Exit'),
+      leading: Icon(
+        Icons.exit_to_app,
+        size: mySizeIcon,
+        color: Colors.blue,
+      ),
+      title: Text(
+        'Sign Out & Exit',
+        style: TextStyle(
+          fontSize: myH2,
+          color: Colors.blue,
+        ),
+      ),
     );
   }
 
@@ -37,6 +73,10 @@ class _ProductListState extends State<ProductList> {
     );
   }
 
+  Widget showLogBy() {
+    return Text('Login by $nameLogin');
+  }
+
   Widget headMyDrawer() {
     return DrawerHeader(
       decoration: BoxDecoration(
@@ -52,6 +92,7 @@ class _ProductListState extends State<ProductList> {
           children: <Widget>[
             showLogo(),
             showAppName(),
+            showLogBy(),
           ],
         ),
       ),
@@ -62,7 +103,13 @@ class _ProductListState extends State<ProductList> {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          headMyDrawer(), titleSignOut(),
+          headMyDrawer(),
+          showHomeMenu(),
+          myDivider(),
+          showInfoMenu(),
+          myDivider(),
+          titleSignOut(),
+          myDivider(),
         ],
       ),
     );
@@ -88,6 +135,48 @@ class _ProductListState extends State<ProductList> {
     });
   }
 
+  Widget showHomeMenu() {
+    return ListTile(
+      leading: Icon(
+        Icons.home,
+        size: mySizeIcon,
+        color: Color.fromARGB(255, 140, 0, 50),
+      ),
+      title: Text(
+        'Marketplate',
+        style:
+            TextStyle(fontSize: myH2, color: Color.fromARGB(255, 140, 0, 50)),
+      ),onTap: (){
+        setState(() {
+          myWidget = Marketplate();
+        });
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
+  Widget showInfoMenu() {
+    return ListTile(
+      leading: Icon(
+        Icons.info,
+        size: mySizeIcon,
+        color: Colors.green,
+      ),
+      title: Text(
+        'Information',
+        style: TextStyle(
+          fontSize: myH2,
+          color: Colors.green,
+        ),
+      ),onTap: (){
+        setState(() {
+          myWidget = Information();
+        });
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +184,7 @@ class _ProductListState extends State<ProductList> {
         title: Text('Product List'),
         actions: <Widget>[signOutButton()],
       ),
-      body: Text('body'),
+      body: myWidget,
       drawer: myDrawerMenu(),
     );
   }
