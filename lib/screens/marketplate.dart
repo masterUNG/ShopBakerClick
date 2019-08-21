@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_bakerclick/models/promotion_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Marketplate extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _MarketplateState extends State<Marketplate> {
   double mySpace = 16.0;
   Color myColorText = Colors.blue[900];
   List<PromotionModel> promotionModels = [];
+  List<Widget> promotionsImages = [];
 
   // Method
   @override
@@ -39,9 +41,35 @@ class _MarketplateState extends State<Marketplate> {
         PromotionModel promotionModel = PromotionModel(namePromotion, urlImage);
         setState(() {
           promotionModels.add(promotionModel);
+          promotionsImages.add(makeBanner(namePromotion, urlImage));
         });
       }
     });
+  }
+
+  Widget makeBanner(String title, String urlImage) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 200.0,
+      child: Stack(
+        children: <Widget>[
+          Image.network(
+            urlImage,
+            fit: BoxFit.fill,
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget titleBanner() {
@@ -62,13 +90,12 @@ class _MarketplateState extends State<Marketplate> {
     );
   }
 
-
-
   Widget imageBanner() {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       height: 200.0,
-      child: ListView.builder(scrollDirection: Axis.horizontal,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
         itemCount: promotionModels.length,
         itemBuilder: (BuildContext context, int index) {
           return Image.network(promotionModels[index].pathImage);
@@ -82,8 +109,19 @@ class _MarketplateState extends State<Marketplate> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         titleBanner(),
-        imageBanner(),
+        bannerCarouse(),
       ],
+    );
+  }
+
+  Widget bannerCarouse() {
+    return CarouselSlider(
+      enlargeCenterPage: true,
+      aspectRatio: 16 / 9,
+      pauseAutoPlayOnTouch: Duration(seconds: 5),
+      autoPlay: true,
+      autoPlayAnimationDuration: Duration(seconds: 2),
+      items: promotionsImages,
     );
   }
 
