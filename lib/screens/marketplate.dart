@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_bakerclick/models/promotion_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:koukicons/assistant.dart';
 
 class Marketplate extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _MarketplateState extends State<Marketplate> {
   double myH1 = 24.0;
   double myH2 = 18.0;
   double mySpace = 16.0;
+  double iconSize = 100.0;
   Color myColorText = Colors.blue[900];
   List<PromotionModel> promotionModels = [];
   List<Widget> promotionsImages = [];
@@ -59,6 +61,9 @@ class _MarketplateState extends State<Marketplate> {
           ),
           Container(
             alignment: Alignment.bottomCenter,
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
             child: Text(
               title,
               style: TextStyle(
@@ -72,7 +77,7 @@ class _MarketplateState extends State<Marketplate> {
     );
   }
 
-  Widget titleBanner() {
+  Widget titleBanner(String title) {
     return Container(
       padding: EdgeInsets.only(
         left: mySpace,
@@ -81,7 +86,7 @@ class _MarketplateState extends State<Marketplate> {
       ),
       alignment: Alignment.topLeft,
       child: Text(
-        'What News ?',
+        title,
         style: TextStyle(
           fontSize: myH1,
           color: myColorText,
@@ -108,7 +113,7 @@ class _MarketplateState extends State<Marketplate> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        titleBanner(),
+        titleBanner('What News ?'),
         bannerCarouse(),
       ],
     );
@@ -120,17 +125,63 @@ class _MarketplateState extends State<Marketplate> {
       aspectRatio: 16 / 9,
       pauseAutoPlayOnTouch: Duration(seconds: 5),
       autoPlay: true,
-      autoPlayAnimationDuration: Duration(seconds: 2),
+      autoPlayAnimationDuration: Duration(seconds: 5),
       items: promotionsImages,
+    );
+  }
+
+  Widget showIconGroup(Widget iconWidget, Color bgColor) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      color: bgColor,
+      width: iconSize,
+      height: iconSize,
+      child: iconWidget,
+    );
+  }
+
+  Widget showTextGroup(String title, String subTitle) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 10.0,right: 10.0,
+      ),
+      color: Colors.white,
+      height: iconSize,
+      width: MediaQuery.of(context).size.width - iconSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(fontSize: myH1),
+          ),
+          Text(subTitle),
+        ],
+      ),
+    );
+  }
+
+  Widget thaiCandy() {
+    return Row(
+      children: <Widget>[
+        showIconGroup(KoukiconsAssistant(), Colors.yellow.shade300),
+        showTextGroup('ขนมไทย',
+            'ขนมไทยแสนอร่อย ต้นตำหรับแท้ๆ ขนมไทยแสนอร่อย ต้นตำหรับแท้ๆขนมไทยแสนอร่อย ต้นตำหรับแท้ๆขนมไทยแสนอร่อย')
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        showBanner(),
-      ],
+    return Container(color: Colors.grey.shade400,
+      child: ListView(
+        children: <Widget>[
+          showBanner(),
+          titleBanner('Category'),
+          thaiCandy(),
+        ],
+      ),
     );
   }
 }
