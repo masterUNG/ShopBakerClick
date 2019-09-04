@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:koukicons/reading.dart';
 import 'package:shop_bakerclick/models/promotion_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:koukicons/assistant.dart';
+
 
 class Marketplate extends StatefulWidget {
   @override
@@ -165,7 +166,7 @@ class _MarketplateState extends State<Marketplate> {
   Widget thaiCandy() {
     return Row(
       children: <Widget>[
-        showIconGroup(KoukiconsAssistant(), Colors.yellow.shade300),
+        showIconGroup(KoukiconsReading(), Colors.yellow.shade200),
         showTextGroup('ขนมไทย',
             'ขนมไทยแสนอร่อย ต้นตำหรับแท้ๆ ขนมไทยแสนอร่อย ต้นตำหรับแท้ๆขนมไทยแสนอร่อย ต้นตำหรับแท้ๆขนมไทยแสนอร่อย')
       ],
