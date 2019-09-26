@@ -8,7 +8,7 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   // Explicit
-  String categoryString = '';
+  String categoryString = 'อาหารจานด่วน';
 
   // Method
   @override
