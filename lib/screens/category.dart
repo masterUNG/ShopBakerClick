@@ -2,19 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Category extends StatefulWidget {
+
+  final String myCategory;
+
+  Category({Key key, this.myCategory}) : super(key: key) ;
+
   @override
   _CategoryState createState() => _CategoryState();
 }
 
 class _CategoryState extends State<Category> {
   // Explicit
-  String categoryString = 'อาหารจานด่วน';
+  String categoryString;
 
   // Method
   @override
   void initState() {
     super.initState();
+    setupVariable();
     readFireStore();
+    
+  }
+
+  void setupVariable(){
+    categoryString = widget.myCategory;
+    print('categoryString = $categoryString');
   }
 
   Future<void> readFireStore() async {
