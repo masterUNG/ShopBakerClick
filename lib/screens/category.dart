@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shop_bakerclick/models/menu_item_model.dart';
 
 class Category extends StatefulWidget {
-
   final String myCategory;
 
-  Category({Key key, this.myCategory}) : super(key: key) ;
+  Category({Key key, this.myCategory}) : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -14,6 +14,7 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   // Explicit
   String categoryString;
+  List<MenuItemModel> menuItemModels = [];
 
   // Method
   @override
@@ -21,10 +22,9 @@ class _CategoryState extends State<Category> {
     super.initState();
     setupVariable();
     readFireStore();
-    
   }
 
-  void setupVariable(){
+  void setupVariable() {
     categoryString = widget.myCategory;
     print('categoryString = $categoryString');
   }
@@ -41,10 +41,10 @@ class _CategoryState extends State<Category> {
         .listen((response) {
       List<DocumentSnapshot> snapshots = response.documents;
       for (var snapshot in snapshots) {
-        String nameDocument = snapshot.documentID;
-        print('nameDocument = $nameDocument');
-        String title = snapshot.data['NameFood'];
-        print('title = $title');
+        MenuItemModel menuItemModel = MenuItemModel.fromSnapshot(snapshot.data);
+        setState(() {
+          menuItemModels.add(menuItemModel);
+        });
       }
     });
   }
@@ -53,7 +53,12 @@ class _CategoryState extends State<Category> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Text('body'),
+      body: ListView.builder(
+        itemCount: menuItemModels.length,
+        itemBuilder: (BuildContext context, int index){
+          return Text(menuItemModels[index].nameFood);
+        },
+      ),
     );
   }
 }
