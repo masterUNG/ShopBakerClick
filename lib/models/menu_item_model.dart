@@ -10,7 +10,7 @@ class MenuItemModel {
   MenuItemModel.fromSnapshot(Map<String, dynamic> mySnapshot){
     nameFood = mySnapshot['NameFood'];
     detail = mySnapshot['Detail'];
-    pathImage = mySnapshot['PathImage'];
+    pathImage = mySnapshot['ImagePath'];
     price = mySnapshot['Price'];
   }
 

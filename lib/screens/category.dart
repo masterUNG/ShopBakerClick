@@ -49,14 +49,47 @@ class _CategoryState extends State<Category> {
     });
   }
 
+  Widget showName(int index){
+    return Text(menuItemModels[index].nameFood);
+  }
+
+  Widget showText(int index) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width*0.4,
+      child: Column(children: <Widget>[showName(index), ],),
+    );
+  }
+
+  Widget showPicture(int index) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.width * 0.4,
+      child: Image.network(
+        menuItemModels[index].pathImage,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget showList(int index) {
+    return Row(
+      children: <Widget>[
+        showPicture(index),
+        showText(index),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: ListView.builder(
         itemCount: menuItemModels.length,
-        itemBuilder: (BuildContext context, int index){
-          return Text(menuItemModels[index].nameFood);
+        itemBuilder: (BuildContext context, int index) {
+          return showList(index);
         },
       ),
     );
