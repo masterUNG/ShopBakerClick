@@ -8,12 +8,12 @@ import 'package:shop_bakerclick/screens/marketplate.dart';
 import 'package:shop_bakerclick/utility/my_style.dart';
 import 'package:shop_bakerclick/widget/information.dart';
 
-class ProductList extends StatefulWidget {
+class MyService extends StatefulWidget {
   @override
-  _ProductListState createState() => _ProductListState();
+  _MyServiceState createState() => _MyServiceState();
 }
 
-class _ProductListState extends State<ProductList> {
+class _MyServiceState extends State<MyService> {
   // Explicit
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   String nameLogin = '';
@@ -186,7 +186,7 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: MyStyle().appBarColor,
+      appBar: AppBar(backgroundColor: MyStyle().mainColor,
         title: Text(titleAppBar),
         actions: <Widget>[signOutButton()],
       ),
