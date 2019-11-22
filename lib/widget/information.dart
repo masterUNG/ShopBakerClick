@@ -6,8 +6,19 @@ class Information extends StatefulWidget {
 }
 
 class _InformationState extends State<Information> {
+
+  // Field
+  String loginString = '...';
+
+  // Method
+  Widget showLogin(){
+    return Text('Name : $loginString');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text('This is Infomation');
+    return ListView(
+      children: <Widget>[showLogin(),],
+    );
   }
 }
