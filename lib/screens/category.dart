@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shop_bakerclick/models/menu_item_model.dart';
+import 'package:shop_bakerclick/utility/my_style.dart';
 
 class Category extends StatefulWidget {
   final String myCategory;
@@ -49,15 +50,68 @@ class _CategoryState extends State<Category> {
     });
   }
 
-  Widget showName(int index){
-    return Text(menuItemModels[index].nameFood);
+  Widget showName(int index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          menuItemModels[index].nameFood,
+          style: index % 2 == 0
+              ? MyStyle().h2MainTextStyle
+              : MyStyle().h2WeakTextStyle,
+        ),
+      ],
+    );
+  }
+
+  Widget showDetail(int index) {
+    String detail = menuItemModels[index].detail;
+    if (detail.length >= 40) {
+      detail = detail.substring(0, 39);
+      detail = '$detail ...';
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width * 0.5 - 10,
+          child: Text(
+            detail,
+            style:
+                TextStyle(color: index % 2 == 0 ? Colors.black : Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget showPrice(int index) {
+    String price = menuItemModels[index].price;
+    price = '$price thb';
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Text(
+          price,
+          style: MyStyle().h1TextStyle,
+        ),
+      ],
+    );
   }
 
   Widget showText(int index) {
     return Container(
+      padding: EdgeInsets.only(right: 10.0),
       width: MediaQuery.of(context).size.width * 0.5,
-      height: MediaQuery.of(context).size.width*0.4,
-      child: Column(children: <Widget>[showName(index), ],),
+      height: MediaQuery.of(context).size.width * 0.4,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          showName(index),
+          showDetail(index),
+          showPrice(index),
+        ],
+      ),
     );
   }
 
@@ -74,11 +128,16 @@ class _CategoryState extends State<Category> {
   }
 
   Widget showList(int index) {
-    return Row(
-      children: <Widget>[
-        showPicture(index),
-        showText(index),
-      ],
+    return Container(
+      decoration: index % 2 == 0
+          ? BoxDecoration(color: MyStyle().wakeColor)
+          : BoxDecoration(color: MyStyle().mainColor),
+      child: Row(
+        children: <Widget>[
+          showPicture(index),
+          showText(index),
+        ],
+      ),
     );
   }
 
